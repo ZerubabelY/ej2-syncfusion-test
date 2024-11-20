@@ -1,28 +1,45 @@
 <template>
-  <div id="app" class="control-section default-splitter">
+  <div id="app" class="h-screen default-splitter bg-neutral-50">
     <ejs-splitter id="splitter" ref="splitterObj" height="100vh" width="100vw">
       <e-panes>
-        <e-pane content="#documents"></e-pane>
-        <e-pane content="#pdf-view"></e-pane>
-        <e-pane content="#last-pane-content"></e-pane>
+        <e-pane min="20%" size="20%" content="#documents"></e-pane>
+        <e-pane min="20%" max="60%" size="60%" content="#pdf-view"></e-pane>
+        <e-pane min="20%" size="20%" content="#last-pane-content"></e-pane>
       </e-panes>
     </ejs-splitter>
 
     <!-- pane contents -->
-    <div id="documents" style="display: none">
-      <div class="h-screen">
+    <div id="documents" style="display: none; height: 100%; padding: 10px">
+      <div
+        class="!overflow-hidden bg-white h-full shadow-[_0px_0px_17px_0px_rgba(0,0,0,0.06)] rounded-lg p-5"
+      >
         <documents @file-selected="handleFileSelection" />
       </div>
     </div>
 
-    <div id="pdf-view" style="display: none">
-      <div>
-        <PDFView />
+    <div id="pdf-view" style="display: none; height: 100%; padding: 10px">
+      <div
+        class="!overflow-hidden bg-white h-full w-[1000px] shadow-[_0px_0px_17px_0px_rgba(0,0,0,0.06)] rounded-lg py-5"
+      >
+        <PDFView :selectedFile="selectedFile" />
       </div>
     </div>
 
-    <div id="last-pane-content" style="display: none">
-      <Metadata :key="file" :file="selectedFile" />
+    <div
+      id="last-pane-content"
+      style="
+        display: none;
+        height: 100%;
+        width: 100%;
+        padding: 10px;
+        position: relative;
+      "
+    >
+      <div
+        class="!overflow-hidden bg-white h-full shadow-[_0px_0px_17px_0px_rgba(0,0,0,0.06)] rounded-lg p-5 w-full"
+      >
+        <Metadata :key="file" :file="selectedFile" />
+      </div>
     </div>
   </div>
 </template>
@@ -48,16 +65,12 @@ const selectedFile = ref(null);
  * @param {any} selectedFile
  */
 const handleFileSelection = (file: any) => {
-  console.log("selectedFile: ", selectedFile);
   selectedFile.value = file;
 };
 </script>
 <style>
 @import "../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-vue-layouts/styles/material.css";
-#app {
-  margin-top: 50px;
-}
 
 .e-splitter {
   margin: 0 auto;
@@ -66,6 +79,7 @@ const handleFileSelection = (file: any) => {
   text-align: center;
   align-items: center;
   display: grid;
+  margin: 20px;
 }
 
 /* default split bar resize handle color */

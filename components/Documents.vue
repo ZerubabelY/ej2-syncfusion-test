@@ -1,6 +1,13 @@
 <template>
-  <div id="app" class="min-w-96">
-    <div class="control_wrapper">
+  <div id="app" class="overflow-y-hidden min-w-80">
+    <div>
+      <h1
+        class="text-xl text-center py-2 font-medium poppins bg-[#cbdcec] text-[#71b2f3] rounded"
+      >
+        Files
+      </h1>
+    </div>
+    <div class="mt-3 control_wrapper">
       <ejs-treeview
         id="treeview"
         :fields="fields"
@@ -9,7 +16,13 @@
         :nodeClicked="handleNodeClick"
       >
         <template #nodeTemplate="{ data }">
-          <div :value="JSON.stringify(data)" class="flex items-center gap-3">
+          <div
+            :value="JSON.stringify(data)"
+            class="flex items-center gap-3"
+            :class="{
+              'active-node-item': data.id == selectedFileID,
+            }"
+          >
             <img
               class="w-8 eimage"
               :src="data.hasChild ? '/icons/folder.svg' : '/icons/pdf.svg'"
@@ -26,71 +39,7 @@
 import { defineEmits } from "vue";
 import type { NodeClickEventArgs } from "@syncfusion/ej2-vue-navigations";
 import { TreeViewComponent as EjsTreeview } from "@syncfusion/ej2-vue-navigations";
-
-var dataSource = [
-  {
-    id: 1,
-    name: "Custom Folder",
-    hasChild: true,
-    expanded: true,
-  },
-  {
-    id: 2,
-    pid: 1,
-    hadChild: true,
-    name: "Reports",
-    hasChild: true,
-    expanded: true,
-  },
-  {
-    id: 3,
-    pid: 2,
-    name: "Report 1.pdf",
-    hasChild: false,
-    metadata: {
-      size: "1.2 MB",
-      createdDate: "2023-01-10T14:00:00",
-      author: "John Doe",
-      lastModifiedDate: "2024-07-12T16:45:00",
-      fileType: "PDF",
-      pageCount: 10,
-      description:
-        "Quarterly performance report for Q1 2023, including financial and operational highlights.",
-    },
-  },
-  {
-    id: 4,
-    pid: 2,
-    name: "Report 2.pdf",
-    hasChild: false,
-    metadata: {
-      size: "1.8 MB",
-      createdDate: "2023-04-15T09:30:00",
-      author: "Jane Smith",
-      lastModifiedDate: "2024-08-20T11:10:00",
-      fileType: "PDF",
-      pageCount: 12,
-      description:
-        "Detailed project analysis for the mid-year review, including key milestones achieved.",
-    },
-  },
-  {
-    id: 5,
-    pid: 2,
-    name: "Report 3.pdf",
-    hasChild: false,
-    metadata: {
-      size: "2.5 MB",
-      createdDate: "2023-10-05T18:20:00",
-      author: "Analytics Team",
-      lastModifiedDate: "2024-11-01T14:55:00",
-      fileType: "PDF",
-      pageCount: 18,
-      description:
-        "Annual summary report with a focus on overall company performance and strategic objectives.",
-    },
-  },
-];
+import { dataSource } from "~/helper/data/dummy";
 
 const fields = {
   dataSource: dataSource,
@@ -124,7 +73,6 @@ const handleNodeClick = (args: NodeClickEventArgs) => {
 </script>
 <style>
 @import "../node_modules/@syncfusion/ej2-base/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-vue-navigations/styles/material.css";
 
 .control_wrapper {
   display: block;
@@ -169,16 +117,30 @@ const handleNodeClick = (args: NodeClickEventArgs) => {
   width: 100%;
   height: 50px;
   border: none;
+  border-radius: 10px;
 }
 
 .e-treeview .e-list-item.e-active .e-fullrow {
-  background-color: #f9fafb !important;
+  background-color: transparent !important;
   width: 100%;
   height: 50px;
   border: none;
 }
 
+.e-treeview .e-list-item.e-active > .e-fullrow {
+  background-color: #f9fafb !important;
+}
+
 .e-treeview .e-list-item.e-active .e-list-text {
+  /*color: transparent !important;*/
+}
+
+.e-treeview .e-list-item.e-active .e-list-text .active-node-item {
   color: #71b2f3 !important;
+}
+
+.e-treeview .e-text-content {
+  padding: 0px;
+  padding-left: 10px;
 }
 </style>

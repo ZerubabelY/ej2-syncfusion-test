@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     },
   },
 
+  plugins: ["~/plugins/syncfusion.js"],
   // images that can start with https://ej2.syncfusion.com
   image: {
     domains: ["ej2.syncfusion.com"],
