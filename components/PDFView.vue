@@ -10,7 +10,7 @@
     <div v-if="loading" class="flex items-center justify-center w-full h-full">
       <div class="flex items-center justify-center h-full">
         <div
-          class="w-32 h-32 ease-linear border-8 border-t-8 border-gray-200 rounded-full loader"
+          class="w-24 h-24 ease-linear border-8 border-t-8 border-t-[#71b2f3] animate-spin rounded-full loader"
         ></div>
       </div>
     </div>
